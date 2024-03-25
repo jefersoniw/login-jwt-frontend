@@ -70,7 +70,7 @@ export default {
         .then((response) => response.json())
         .then((res) => {
           Cookies.set('_myTokenAuth', res.access_token)
-
+          return this.$router.push('/');
         });
     }
   },
