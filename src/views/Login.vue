@@ -30,6 +30,24 @@ export default {
   },
 
   created() {
+
+    const token = Cookies.get('_myTokenAuth');
+
+    if (!!token) {
+      fetch(`http://localhost/api/logout`, {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: 'bearer ' + token
+        }
+      })
+        .then(response => response.json())
+        .then(res => {
+          console.log(res);
+        })
+    }
+
     Cookies.remove('_myTokenAuth')
   },
 
