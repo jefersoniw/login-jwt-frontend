@@ -1,14 +1,14 @@
 <template>
   <main class="form-signin w-100 m-auto">
-    <form>
+    <form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
       <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <input v-model="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <input v-model="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Password</label>
       </div>
 
@@ -18,15 +18,61 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie';
+
 export default {
   name: 'Login',
   data() {
     return {
-
+      email: '',
+      password: '',
     }
   },
-  methods: {
 
+  created() {
+
+    const token = Cookies.get('_myTokenAuth');
+
+    if (!!token) {
+      fetch(`http://localhost/api/logout`, {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: 'bearer ' + token
+        }
+      })
+        .then(response => response.json())
+        .then(res => {
+          console.log(res);
+        })
+    }
+
+    Cookies.remove('_myTokenAuth')
+  },
+
+  methods: {
+    submit() {
+
+      let payload = {
+        email: this.email,
+        password: this.password,
+      }
+
+      fetch(`http://localhost/api/login`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          Cookies.set('_myTokenAuth', res.access_token)
+          return this.$router.push('/');
+        });
+    }
   },
 }
 </script>
