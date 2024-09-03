@@ -25,12 +25,18 @@ import Cookie from 'js-cookie';
 
 export default {
   name: 'Login',
+
   data() {
     return {
       email: '',
       password: ''
     }
   },
+
+  created() {
+    Cookie.remove('_myApp_token');
+  },
+
   methods: {
     submit() {
       const payload = {
