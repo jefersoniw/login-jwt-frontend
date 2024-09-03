@@ -23,6 +23,8 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2';
+
 export default {
   name: 'Register',
 
@@ -36,7 +38,46 @@ export default {
 
   methods: {
 
-    submit() { }
+    submit() {
+
+      const payload = {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }
+
+      fetch(`http://localhost/api/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.error == true) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: res.message
+            });
+          }
+
+          Swal.fire({
+            icon: "success",
+            text: res.message,
+            didClose: () => {
+
+              this.name = '',
+                this.email = '',
+                this.password = ''
+
+              window.location.href = "/";
+            }
+          })
+        })
+    }
 
   },
 }
