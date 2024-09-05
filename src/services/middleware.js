@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 export default {
   auth(to, from, next) {
-    const token = Cookies.get('_myTokenAuth')
+    const token = Cookies.get('_myApp_token')
 
     if (!token) {
       return next('/login')

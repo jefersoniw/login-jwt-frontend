@@ -14,7 +14,7 @@ export default {
   methods: {
     logout() {
 
-      const token = Cookies.get('_myTokenAuth');
+      const token = Cookies.get('_myApp_token');
 
       if (!!token) {
         fetch(`http://localhost/api/logout`, {
