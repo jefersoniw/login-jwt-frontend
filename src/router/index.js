@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import About from '@/views/AboutView.vue'
-import auth from '@/services/middleware'
+import Guard from '@/services/middleware'
 
 const routes = [
   {
@@ -19,7 +19,7 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About,
-    beforeEnter: auth
+    beforeEnter: Guard.auth
   }
 ]
 

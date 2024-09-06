@@ -22,6 +22,7 @@
 
 <script>
 import Cookie from 'js-cookie';
+import Swal from 'sweetalert2';
 
 export default {
   name: 'Login',
@@ -54,8 +55,24 @@ export default {
       })
         .then(response => response.json())
         .then(res => {
+
+          if (!!res.error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: 'Login/Senha incorretos!'
+            });
+          }
+
           Cookie.set('_myApp_token', res.access_token)
-          console.log('Autenticado com sucesso!');
+
+          Swal.fire({
+            icon: "success",
+            text: 'Autenticado com sucesso!',
+            didClose: () => {
+              return this.$router.push('/about');
+            }
+          });
         })
     }
   },
