@@ -21,18 +21,18 @@ export default {
           method: 'get',
           headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: 'bearer ' + token
+            'Accept': 'application/json',
+            'Authorization': 'bearer ' + token
           }
         })
           .then(response => response.json())
           .then(res => {
             console.log(res);
+            Cookies.remove('_myTokenAuth');
           })
       }
 
-      Cookies.remove('_myTokenAuth');
-      return this.$router.push('/login');
+      return this.$router.push('/');
     }
   }
 }
