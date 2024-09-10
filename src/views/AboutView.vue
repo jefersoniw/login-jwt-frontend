@@ -1,6 +1,11 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <p>
+    <h1>I am logged!!</h1>
+    </p>
+    <p>
+    <h4>This is an about page</h4>
+    </p>
 
     <button @click.prevent="logout" class="btn btn-danger w-100 py-2" type="submit">Log out</button>
   </div>
